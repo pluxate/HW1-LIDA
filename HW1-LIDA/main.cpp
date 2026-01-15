@@ -1,3 +1,6 @@
+// HW1-LIDA.cpp
+// Grant Davis, Zach Allen, Thomas Fleming, Raiden ?
+
 #include <iostream>
 
 using namespace std;
