@@ -1,5 +1,5 @@
 // main.cpp
-// Grant Davis, Zach Allen, Thomas Fleming, Raiden ?
+// Grant Davis, Zach Allen, Thomas Fleming, Raiden Michaels
 
 #include <iostream>
 
