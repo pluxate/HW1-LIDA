@@ -17,8 +17,12 @@ template <typename T> class array_list {
 
 
     friend std::ostream& operator<<(std::ostream &out, array_list& arraylist) {
-        for (size_t i = 0; i < arraylist.size(); i++) {
+        size_t i = 0;
+        for (; i < arraylist.count(); i++) {
             out << i << ":" << arraylist.specificthinghere(i) << " ";
+        }
+        for (; i < arraylist.size(); i++) {
+            out << i << ":" << "nil" << " ";
         }
         out << "\n";
         return out;
