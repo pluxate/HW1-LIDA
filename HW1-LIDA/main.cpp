@@ -10,6 +10,8 @@ int main() {
 
     array_list<int> list;
 
+    cout << list;
+
     // dsa::array_list<int> left;
     //
     // left.push_back(13);
