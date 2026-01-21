@@ -1,4 +1,5 @@
 // main.cpp
+// Team ZTRG
 // Grant Davis, Zach Allen, Thomas Fleming, Raiden Michaels
 
 #include "array_list.h"
