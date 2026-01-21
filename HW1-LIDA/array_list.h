@@ -4,7 +4,6 @@
 
 #include <cstddef>
 #include <iostream>
-#include <ostream>
 
 template <typename T> class array_list {
   public:
