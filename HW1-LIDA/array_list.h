@@ -14,9 +14,7 @@ template <typename T> class array_list {
 
     size_t size() { return this->m_size; }
     size_t count() { return this->m_count; }
-    T get(const size_t &x) {
-        return this->m_items[x];
-    }
+    T get(const size_t &x) { return this->m_items[x]; }
 
     T push_back(const T &x) {
 
@@ -58,30 +56,32 @@ template <typename T> class array_list {
     T *begin() { return &this->m_items[0]; }
     T *end() { return &this->m_items[this->m_count]; }
 
-    array_list intersection_unsorted(array_list &left,
-                                     const array_list &right) {
+    array_list<T> intersection_unsorted(const array_list<T> &left,
+                                        const array_list<T> &right) {
         //
         for (size_t i = 0; i < left.size(); i += 1) {
             for (size_t j = 0; j < right.size(); j += 1) {
                 if (left.get(i) == right.get(j)) {
-                    
                 }
             }
         }
         return left;
     }
 
-    array_list intersection_sorted(array_list &left, const array_list &right) {
+    array_list<T> intersection_sorted(const array_list<T> &left,
+                                      const array_list<T> &right) {
         //
         return left;
     }
 
-    array_list union_unsorted(array_list &left, const array_list &right) {
+    array_list<T> union_unsorted(const array_list<T> &left,
+                                 const array_list<T> &right) {
         //
         return left;
     }
 
-    array_list union_sorted(array_list &left, const array_list &right) {
+    array_list<T> union_sorted(const array_list<T> &left,
+                               const array_list<T> &right) {
         //
         return left;
     }
@@ -89,8 +89,7 @@ template <typename T> class array_list {
     friend std::ostream &operator<<(std::ostream &out, array_list &arraylist) {
         size_t i = 0;
         for (; i < arraylist.count(); i++) {
-            out << i << ":"
-                << arraylist.pleasegetthisspecificthinghereatindexof(i) << " ";
+            out << i << ":" << arraylist.get(i) << " ";
         }
         for (; i < arraylist.size(); i++) {
             out << i << ":" << "nil" << " ";
