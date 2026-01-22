@@ -6,6 +6,7 @@
 #include <cstddef>
 #include <iostream>
 
+namespace dsa {
 template <typename T> class array_list {
   public:
     array_list() { std::cout << "array list created" << '\n'; }
@@ -38,3 +39,4 @@ template <typename T> class array_list {
     size_t m_size = 4;
     size_t m_count = 4;
 };
+} // namespace dsa
