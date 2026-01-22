@@ -59,13 +59,25 @@ template <typename T> class array_list {
     array_list<T> intersection_unsorted(const array_list<T> &left,
                                         const array_list<T> &right) {
         //
-        for (size_t i = 0; i < left.size(); i += 1) {
-            for (size_t j = 0; j < right.size(); j += 1) {
-                if (left.get(i) == right.get(j)) {
+        T *newItems = new T[left.m_size + right.m_size];
+        bool *usedItems = new bool[right.m_size]{false};
+        size_t newItemsCount = 0;
+        for (size_t i = 0; i < left.m_size; i += 1) {
+            for (size_t j = 0; j < right.m_size; j += 1) {
+                if (left.m_items[i] == right.m_items[j] && !usedItems[j]) {
+                    usedItems[j] = true;
+                    newItems[newItemsCount] = left.m_items[i];
+                    newItemsCount += 1;
+                    break;
                 }
             }
         }
-        return left;
+        array_list<T> newList;
+        for (size_t i = 0; i < newItemsCount; i += 1) {
+            auto item = newItems[i];
+            newList.push_back(item);
+        }
+        return newList;
     }
 
     array_list<T> intersection_sorted(const array_list<T> &left,
