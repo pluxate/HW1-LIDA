@@ -12,9 +12,9 @@ template <typename T> class array_list {
     array_list() { this->m_items = nullptr; }
     ~array_list() {}
 
-    size_t size() { return this->m_size; }
-    size_t count() { return this->m_count; }
-    T get(const size_t &x) { return this->m_items[x]; }
+    size_t size() const { return this->m_size; }
+    size_t count() const { return this->m_count; }
+    T get(const size_t &x) const { return this->m_items[x]; }
 
     T push_back(const T &x) {
 
@@ -53,8 +53,8 @@ template <typename T> class array_list {
         return x;
     }
 
-    T *begin() { return &this->m_items[0]; }
-    T *end() { return &this->m_items[this->m_count]; }
+    T *begin() const { return &this->m_items[0]; }
+    T *end() const { return &this->m_items[this->m_count]; }
 
     array_list<T> intersection_unsorted(const array_list<T> &left,
                                         const array_list<T> &right) {
@@ -76,12 +76,12 @@ template <typename T> class array_list {
 
     array_list<T> union_unsorted(const array_list<T> &left,
                                  const array_list<T> &right) {
-        const size_t maxSize = (left.m_size + right.m_size);
+        const size_t maxSize = (left.size() + right.size());
         T *newItems = new T[maxSize];
         size_t newItemsCount = 0;
 
-        for (size_t i = 0; i < left.m_count; i += 1) {
-            const T &leftItem = left.m_items[i];
+        for (size_t i = 0; i < left.count(); i += 1) {
+            const T &leftItem = left.get(i);
             bool duplicateFound = false;
 
             for (size_t j = 0; j < newItemsCount; j += 1) {
@@ -98,8 +98,8 @@ template <typename T> class array_list {
             }
         }
 
-        for (size_t i = 0; i < right.m_count; i += 1) {
-            const T &rightItem = right.m_items[i];
+        for (size_t i = 0; i < right.count(); i += 1) {
+            const T &rightItem = right.get(i);
             bool duplicateFound = false;
 
             for (size_t j = 0; j < newItemsCount; j += 1) {
@@ -134,10 +134,10 @@ template <typename T> class array_list {
     friend std::ostream &operator<<(std::ostream &out,
                                     const array_list &arraylist) {
         size_t i = 0;
-        for (; i < arraylist.m_count; i++) {
-            out << i << ":" << arraylist.m_items[i] << " ";
+        for (; i < arraylist.count(); i++) {
+            out << i << ":" << arraylist.get(i) << " ";
         }
-        for (; i < arraylist.m_size; i++) {
+        for (; i < arraylist.size(); i++) {
             out << i << ":" << "nil" << " ";
         }
         out << "\n";
