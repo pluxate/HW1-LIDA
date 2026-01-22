@@ -58,6 +58,27 @@ template <typename T> class array_list {
     T *begin() { return &this->m_items[0]; }
     T *end() { return &this->m_items[this->m_count]; }
 
+    array_list intersection_unsorted(array_list &left,
+                                     const array_list &right) {
+        //
+        return left;
+    }
+
+    array_list intersection_sorted(array_list &left, const array_list &right) {
+        //
+        return left;
+    }
+
+    array_list unique_unsorted(array_list &left, const array_list &right) {
+        //
+        return left;
+    }
+
+    array_list unique_sorted(array_list &left, const array_list &right) {
+        //
+        return left;
+    }
+
     friend std::ostream &operator<<(std::ostream &out, array_list &arraylist) {
         size_t i = 0;
         for (; i < arraylist.count(); i++) {
