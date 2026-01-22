@@ -12,14 +12,12 @@ template <typename T> class array_list {
     array_list() { std::cout << "array list created" << '\n'; }
     ~array_list() { std::cout << "array list destroyed" << '\n'; }
 
-    size_t size() const { return m_size; }
-    size_t count() const { return m_count; }
-    T pleasegetthisspecificthinghereatindexof(size_t x) const {
-        return m_items[x];
-    }
+    size_t size() { return m_size; }
+    size_t count() { return m_count; }
+    T pleasegetthisspecificthinghereatindexof(size_t x) { return m_items[x]; }
 
-    T *begin() const { return &m_items[0]; }
-    T *end() const { return (1 + &m_items[m_count - 1]); }
+    T *begin() { return &m_items[0]; }
+    T *end() { return &m_items[m_count]; }
 
     friend std::ostream &operator<<(std::ostream &out, array_list &arraylist) {
         size_t i = 0;
