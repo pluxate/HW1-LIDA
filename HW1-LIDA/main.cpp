@@ -3,13 +3,13 @@
 // Grant Davis, Zach Allen, Thomas Fleming, Raiden Michaels
 
 #include "array_list.h"
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 int main() {
 
-    array_list<int> list;
+    dsa::array_list<int> list;
 
     cout << list;
     std::sort(list.begin(), list.end());
