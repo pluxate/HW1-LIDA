@@ -104,10 +104,12 @@ template <typename T> class array_list {
 
             for (size_t j = 0; j < newItemsCount; j += 1) {
                 const T &newItem = newItems[j];
-                if (rightItem == newItem) {
-                    duplicateFound = true;
-                    break;
+                if (rightItem != newItem) {
+                    continue;
                 }
+
+                duplicateFound = true;
+                break;
             }
 
             if (!duplicateFound) {
