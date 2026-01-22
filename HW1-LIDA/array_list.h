@@ -131,12 +131,13 @@ template <typename T> class array_list {
         return left;
     }
 
-    friend std::ostream &operator<<(std::ostream &out, array_list &arraylist) {
+    friend std::ostream &operator<<(std::ostream &out,
+                                    const array_list &arraylist) {
         size_t i = 0;
-        for (; i < arraylist.count(); i++) {
-            out << i << ":" << arraylist.get(i) << " ";
+        for (; i < arraylist.m_count; i++) {
+            out << i << ":" << arraylist.m_items[i] << " ";
         }
-        for (; i < arraylist.size(); i++) {
+        for (; i < arraylist.m_size; i++) {
             out << i << ":" << "nil" << " ";
         }
         out << "\n";
