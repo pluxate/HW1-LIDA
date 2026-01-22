@@ -14,6 +14,8 @@ template <typename T> class array_list {
     size_t count() { return m_count; }
     T specificthinghere(size_t x) { return m_items[x]; }
 
+    T* begin() { return &m_items[0]; }
+    T* end() { return (1 + &m_items[m_count - 1]); }
 
     friend std::ostream& operator<<(std::ostream &out, array_list& arraylist) {
         size_t i = 0;
@@ -28,7 +30,7 @@ template <typename T> class array_list {
     }
 
   private:
-    T m_items[1];
-    size_t m_size = 1;
-    size_t m_count = 0;
+    T m_items[4]{5, 10, 1, 6};
+    size_t m_size = 4;
+    size_t m_count = 4;
 };

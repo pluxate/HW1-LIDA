@@ -4,12 +4,15 @@
 
 #include "array_list.h"
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 int main() {
 
     array_list<int> list;
 
+    cout << list;
+    std::sort(list.begin(), list.end());
     cout << list;
 
     // dsa::array_list<int> left;
