@@ -69,12 +69,12 @@ template <typename T> class array_list {
         return left;
     }
 
-    array_list unique_unsorted(array_list &left, const array_list &right) {
+    array_list union_unsorted(array_list &left, const array_list &right) {
         //
         return left;
     }
 
-    array_list unique_sorted(array_list &left, const array_list &right) {
+    array_list union_sorted(array_list &left, const array_list &right) {
         //
         return left;
     }
