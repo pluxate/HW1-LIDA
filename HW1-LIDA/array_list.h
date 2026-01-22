@@ -14,7 +14,7 @@ template <typename T> class array_list {
 
     size_t size() { return this->m_size; }
     size_t count() { return this->m_count; }
-    T pleasegetthisspecificthinghereatindexof(const size_t &x) {
+    T get(const size_t &x) {
         return this->m_items[x];
     }
 
@@ -61,6 +61,13 @@ template <typename T> class array_list {
     array_list intersection_unsorted(array_list &left,
                                      const array_list &right) {
         //
+        for (size_t i = 0; i < left.size(); i += 1) {
+            for (size_t j = 0; j < right.size(); j += 1) {
+                if (left.get(i) == right.get(j)) {
+                    
+                }
+            }
+        }
         return left;
     }
 
