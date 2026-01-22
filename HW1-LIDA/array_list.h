@@ -41,9 +41,9 @@ template <typename T> class array_list {
             this->m_items = newItems;
 
             this->m_size = newSize;
-            this->m_count += 1;
 
-            this->m_items[this->m_count - 1] = x;
+            this->m_items[this->m_count] = x;
+            this->m_count += 1;
             return x;
         }
 
@@ -76,8 +76,53 @@ template <typename T> class array_list {
 
     array_list<T> union_unsorted(const array_list<T> &left,
                                  const array_list<T> &right) {
-        //
-        return left;
+        const size_t maxSize = (left.m_size + right.m_size);
+        T *newItems = new T[maxSize];
+        size_t newItemsCount = 0;
+
+        for (size_t i = 0; i < left.m_count; i += 1) {
+            const T &leftItem = left.m_items[i];
+            bool duplicateFound = false;
+
+            for (size_t j = 0; j < newItemsCount; j += 1) {
+                const T &newItem = newItems[j];
+                if (leftItem == newItem) {
+                    duplicateFound = true;
+                    break;
+                }
+            }
+
+            if (!duplicateFound) {
+                newItems[newItemsCount] = leftItem;
+                newItemsCount += 1;
+            }
+        }
+
+        for (size_t i = 0; i < right.m_count; i += 1) {
+            const T &rightItem = right.m_items[i];
+            bool duplicateFound = false;
+
+            for (size_t j = 0; j < newItemsCount; j += 1) {
+                const T &newItem = newItems[j];
+                if (rightItem == newItem) {
+                    duplicateFound = true;
+                    break;
+                }
+            }
+
+            if (!duplicateFound) {
+                newItems[newItemsCount] = rightItem;
+                newItemsCount += 1;
+            }
+        }
+
+        array_list<T> newList;
+        for (size_t i = 0; i < newItemsCount; i += 1) {
+            auto item = newItems[i];
+            newList.push_back(item);
+        }
+
+        return newList;
     }
 
     array_list<T> union_sorted(const array_list<T> &left,
