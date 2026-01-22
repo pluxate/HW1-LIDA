@@ -12,9 +12,9 @@ template <typename T> class array_list {
     array_list() { this->m_items = nullptr; }
     ~array_list() {}
 
-    size_t size() { return this->m_size; }
-    size_t count() { return this->m_count; }
-    T get(const size_t &x) { return this->m_items[x]; }
+    size_t size() const { return this->m_size; }
+    size_t count() const { return this->m_count; }
+    T get(const size_t &x) const { return this->m_items[x]; }
 
     T push_back(const T &x) {
 
@@ -53,8 +53,8 @@ template <typename T> class array_list {
         return x;
     }
 
-    T *begin() { return &this->m_items[0]; }
-    T *end() { return &this->m_items[this->m_count]; }
+    T *begin() const { return &this->m_items[0]; }
+    T *end() const { return &this->m_items[this->m_count]; }
 
     array_list<T> intersection_unsorted(const array_list<T> &left,
                                         const array_list<T> &right) {
@@ -88,49 +88,69 @@ template <typename T> class array_list {
 
     array_list<T> union_unsorted(const array_list<T> &left,
                                  const array_list<T> &right) {
-        const size_t maxSize = (left.m_size + right.m_size);
-        T *newItems = new T[maxSize];
-        size_t newItemsCount = 0;
+        // get all uniques by:
+        // for item in left.items:
+        // 	if item not in "uniques" list:
+        //		uniques.append(item)
+        //		uniquesCount += 1
+        //
+        // then do the same thing with right.items, using same "uniques" list
+        // finally construct a new array_list object and return
 
-        for (size_t i = 0; i < left.m_count; i += 1) {
-            const T &leftItem = left.m_items[i];
+        // max size is if all items in both lists are unique, so sizes combined
+        const size_t maxSize = (left.size() + right.size());
+        T *uniques = new T[maxSize];
+        size_t uniquesCount = 0;
+
+        for (size_t i = 0; i < left.count(); i += 1) {
+            const T &leftItem = left.get(i);
             bool duplicateFound = false;
 
-            for (size_t j = 0; j < newItemsCount; j += 1) {
-                const T &newItem = newItems[j];
+            // if left item is not in the uniques list, add it
+            // must use duplicateFound outside of for loop because
+            // list starts off with 0 items, and it is false by default
+            for (size_t j = 0; j < uniquesCount; j += 1) {
+                const T &newItem = uniques[j];
                 if (leftItem == newItem) {
                     duplicateFound = true;
                     break;
                 }
             }
 
+            // finally add
             if (!duplicateFound) {
-                newItems[newItemsCount] = leftItem;
-                newItemsCount += 1;
+                uniques[uniquesCount] = leftItem;
+                uniquesCount += 1;
             }
         }
 
-        for (size_t i = 0; i < right.m_count; i += 1) {
-            const T &rightItem = right.m_items[i];
+        // same thing as left list but with right instead
+        // compare against the somewhat-filled "unique" list instead of an empty
+        // list though
+        for (size_t i = 0; i < right.count(); i += 1) {
+            const T &rightItem = right.get(i);
             bool duplicateFound = false;
 
-            for (size_t j = 0; j < newItemsCount; j += 1) {
-                const T &newItem = newItems[j];
-                if (rightItem == newItem) {
-                    duplicateFound = true;
-                    break;
+            for (size_t j = 0; j < uniquesCount; j += 1) {
+                const T &newItem = uniques[j];
+                if (rightItem != newItem) {
+                    continue;
                 }
+
+                duplicateFound = true;
+                break;
             }
 
             if (!duplicateFound) {
-                newItems[newItemsCount] = rightItem;
-                newItemsCount += 1;
+                uniques[uniquesCount] = rightItem;
+                uniquesCount += 1;
             }
         }
 
+        // construct the new array_list object and return
         array_list<T> newList;
-        for (size_t i = 0; i < newItemsCount; i += 1) {
-            auto item = newItems[i];
+        for (size_t i = 0; i < uniquesCount; i += 1) {
+            T item = uniques[i];
             newList.push_back(item);
         }
 
@@ -146,10 +166,10 @@ template <typename T> class array_list {
     friend std::ostream &operator<<(std::ostream &out,
                                     const array_list &arraylist) {
         size_t i = 0;
-        for (; i < arraylist.m_count; i++) {
-            out << i << ":" << arraylist.m_items[i] << " ";
+        for (; i < arraylist.count(); i++) {
+            out << i << ":" << arraylist.get(i) << " ";
         }
-        for (; i < arraylist.m_size; i++) {
+        for (; i < arraylist.size(); i++) {
             out << i << ":" << "nil" << " ";
         }
         out << "\n";

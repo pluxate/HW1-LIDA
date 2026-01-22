@@ -42,8 +42,8 @@ int main() {
     std::cout << right << '\n';
     //
     // // intersection unsorted list:
-     std::cout << "Intersection of unsorted list: " << '\n';
-     std::cout << left.intersection_unsorted(left, right) << '\n';
+    // std::cout << "Intersection of unsorted list: " << '\n';
+    // std::cout << left.intersection_unsorted(left, right) << '\n';
     // std::cout << "Union of unsorted list: " << '\n';
     // std::cout << left.union_unsorted(left, right) << '\n';
     //
