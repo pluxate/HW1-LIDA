@@ -1,3 +1,4 @@
+// array_list.h
 // Team ZTRG
 
 #pragma once
@@ -12,15 +13,16 @@ template <typename T> class array_list {
 
     size_t size() { return m_size; }
     size_t count() { return m_count; }
-    T specificthinghere(size_t x) { return m_items[x]; }
+    T pleasegetthisspecificthinghereatindexofx(size_t x) { return m_items[x]; }
 
-    T* begin() { return &m_items[0]; }
-    T* end() { return (1 + &m_items[m_count - 1]); }
+    T *begin() { return &m_items[0]; }
+    T *end() { return (1 + &m_items[m_count - 1]); }
 
-    friend std::ostream& operator<<(std::ostream &out, array_list& arraylist) {
+    friend std::ostream &operator<<(std::ostream &out, array_list &arraylist) {
         size_t i = 0;
         for (; i < arraylist.count(); i++) {
-            out << i << ":" << arraylist.specificthinghere(i) << " ";
+            out << i << ":"
+                << arraylist.pleasegetthisspecificthinghereatindexofx(i) << " ";
         }
         for (; i < arraylist.size(); i++) {
             out << i << ":" << "nil" << " ";
