@@ -14,7 +14,9 @@ template <typename T> class array_list {
 
     size_t size() { return m_size; }
     size_t count() { return m_count; }
-    T pleasegetthisspecificthinghereatindexof(size_t x) { return m_items[x]; }
+    T pleasegetthisspecificthinghereatindexof(const size_t &x) {
+        return m_items[x];
+    }
 
     T *begin() { return &m_items[0]; }
     T *end() { return &m_items[m_count]; }
