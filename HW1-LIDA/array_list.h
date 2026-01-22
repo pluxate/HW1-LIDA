@@ -58,7 +58,11 @@ template <typename T> class array_list {
 
     array_list<T> intersection_unsorted(const array_list<T> &left,
                                         const array_list<T> &right) {
-        //
+        // usedItems tracks right sided compares
+        // Find a match between left and right
+        //   If usedItems[j] == false
+        //     Then add the match to the new array and set the value as being unusable
+
         T *newItems = new T[left.m_size + right.m_size];
         bool *usedItems = new bool[right.m_size]{false};
         size_t newItemsCount = 0;
