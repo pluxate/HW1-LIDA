@@ -103,7 +103,8 @@ template <typename T> class array_list {
 
         // max size is if all items in both lists are unique, so sizes combined
         const size_t maxSize = (left.size() + right.size());
-        T *uniques = new T[maxSize];
+        //T *uniques = new T[maxSize];
+        array_list<T> uniques;
         size_t uniquesCount = 0;
 
         for (size_t i = 0; i < left.count(); i += 1) {
@@ -151,14 +152,16 @@ template <typename T> class array_list {
             }
         }
 
-        // construct the new array_list object and return
-        array_list<T> newList;
+        // old
+        /*array_list<T> newList;
         for (size_t i = 0; i < uniquesCount; i += 1) {
             T item = uniques[i];
             newList.push_back(item);
-        }
+        }*/
 
-        return newList;
+        //return uniques list as that contains all unique values
+
+        return uniques;
     }
 
     array_list<T> union_sorted(const array_list<T> &left,
