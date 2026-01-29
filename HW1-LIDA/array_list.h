@@ -12,6 +12,11 @@ template <typename T> class array_list {
     array_list() { this->m_items = nullptr; }
     ~array_list() {}
 
+    enum SortedType {
+        UNSORTED = 0,
+        SORTED = 1,
+    };
+
     size_t size() const { return this->m_size; }
     size_t count() const { return this->m_count; }
     T get(const size_t &x) const { return this->m_items[x]; }
