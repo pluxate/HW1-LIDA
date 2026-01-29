@@ -63,7 +63,31 @@ template <typename T> class array_list {
 
     bool contains(const T &x, const array_list::SortedType &type) const {
         if (type == SortedType::SORTED) {
-            std::cout << "sorted" << '\n';
+            int upperIndex = (this->count() - 1), lowerIndex = 0;
+
+            while (upperIndex > lowerIndex) {
+                int middleIndex = (upperIndex + lowerIndex) / 2;
+                std::cout << "new middle index: " << middleIndex << '\n';
+                const T &item = this->get(middleIndex);
+
+                std::cout << "x: " << x << '\n';
+                std::cout << "item: " << item << '\n';
+                std::cout << "lowerIndex: " << lowerIndex << '\n';
+                std::cout << "middleIndex: " << middleIndex << '\n';
+                std::cout << "upperIndex: " << upperIndex << '\n';
+
+                if (x > item) {
+                    std::cout << "adding one to lowerIndex" << '\n';
+                    lowerIndex = middleIndex + 1;
+                } else {
+                    std::cout << "adding one to upperIndex" << '\n';
+                    upperIndex = middleIndex + 1;
+                }
+
+                if (item == x) {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -147,7 +171,26 @@ template <typename T> class array_list {
 
     array_list<T> union_sorted(const array_list<T> &left,
                                const array_list<T> &right) {
-        //
+        array_list<T> uniques;
+
+        for (size_t i = 0; i < left.count(); i += 1) {
+            const T &leftItem = left.get(i);
+            if (!uniques.contains(leftItem, SortedType::SORTED)) {
+                uniques.push_back(leftItem);
+            }
+        }
+
+        // same thing as left list but with right instead
+        // compare against the somewhat-filled "unique" list instead of an empty
+        // list though
+        for (size_t i = 0; i < right.count(); i += 1) {
+            const T &rightItem = right.get(i);
+            if (!uniques.contains(rightItem, SortedType::SORTED)) {
+                uniques.push_back(rightItem);
+            }
+        }
+
+        return uniques;
         return left;
     }
 
