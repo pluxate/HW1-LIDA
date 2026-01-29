@@ -127,31 +127,9 @@ template <typename T> class array_list {
 
         for (size_t i = 0; i < left.count(); i += 1) {
             const T &leftItem = left.get(i);
-            // bool duplicateFound = false;
-
-            // if left item is not in the uniques list, add it
-            // must use duplicateFound outside of for loop because
-            // list starts off with 0 items, and it is false by default
-            //
-            // if(!uniques.contains(leftItem)){
-            //	 	uniques.push_back(leftItem);
-            // }
-            //
             if (!uniques.contains(leftItem, SortedType::UNSORTED)) {
                 uniques.push_back(leftItem);
             }
-            // for (size_t j = 0; j < uniques.count(); j += 1) {
-            //     const T &newItem = uniques.get(j);
-            //     if (leftItem == newItem) {
-            //         duplicateFound = true;
-            //         break;
-            //     }
-            // }
-            //
-            // // finally add
-            // if (!duplicateFound) {
-            //     uniques.push_back(leftItem);
-            // }
         }
 
         // same thing as left list but with right instead
