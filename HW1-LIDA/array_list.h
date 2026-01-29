@@ -61,7 +61,8 @@ template <typename T> class array_list {
         // usedItems tracks right sided compares
         // Find a match between left and right
         //   If usedItems[j] == false
-        //     Then add the match to the new array and set the value as being unusable
+        //     Then add the match to the new array and set the value as being
+        //     unusable
 
         T *newItems = new T[left.m_size + right.m_size];
         bool *usedItems = new bool[right.m_size]{false};
@@ -96,16 +97,13 @@ template <typename T> class array_list {
         // for item in left.items:
         // 	if item not in "uniques" list:
         //		uniques.append(item)
-        //		uniquesCount += 1
         //
         // then do the same thing with right.items, using same "uniques" list
         // finally construct a new array_list object and return
 
         // max size is if all items in both lists are unique, so sizes combined
         const size_t maxSize = (left.size() + right.size());
-        //T *uniques = new T[maxSize];
         array_list<T> uniques;
-        size_t uniquesCount = 0;
 
         for (size_t i = 0; i < left.count(); i += 1) {
             const T &leftItem = left.get(i);
@@ -114,7 +112,7 @@ template <typename T> class array_list {
             // if left item is not in the uniques list, add it
             // must use duplicateFound outside of for loop because
             // list starts off with 0 items, and it is false by default
-            for (size_t j = 0; j < uniquesCount; j += 1) {
+            for (size_t j = 0; j < uniques.count(); j += 1) {
                 const T &newItem = uniques[j];
                 if (leftItem == newItem) {
                     duplicateFound = true;
@@ -124,8 +122,7 @@ template <typename T> class array_list {
 
             // finally add
             if (!duplicateFound) {
-                uniques[uniquesCount] = leftItem;
-                uniquesCount += 1;
+                uniques.push_back(leftItem);
             }
         }
 
@@ -136,7 +133,7 @@ template <typename T> class array_list {
             const T &rightItem = right.get(i);
             bool duplicateFound = false;
 
-            for (size_t j = 0; j < uniquesCount; j += 1) {
+            for (size_t j = 0; j < uniques.count(); j += 1) {
                 const T &newItem = uniques[j];
                 if (rightItem != newItem) {
                     continue;
@@ -147,19 +144,9 @@ template <typename T> class array_list {
             }
 
             if (!duplicateFound) {
-                uniques[uniquesCount] = rightItem;
-                uniquesCount += 1;
+                uniques.push_back(rightItem);
             }
         }
-
-        // old
-        /*array_list<T> newList;
-        for (size_t i = 0; i < uniquesCount; i += 1) {
-            T item = uniques[i];
-            newList.push_back(item);
-        }*/
-
-        //return uniques list as that contains all unique values
 
         return uniques;
     }
