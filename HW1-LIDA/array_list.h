@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <iostream>
 
@@ -63,31 +64,36 @@ template <typename T> class array_list {
 
     bool contains(const T &x, const array_list::SortedType &type) const {
         if (type == SortedType::SORTED) {
-            int upperIndex = (this->count() - 1), lowerIndex = 0;
+            // Defining the part of the vector to be
+            // searched
+            int low = 0, high = this->size() - 1;
 
-            while (upperIndex > lowerIndex) {
-                int middleIndex = (upperIndex + lowerIndex) / 2;
-                std::cout << "new middle index: " << middleIndex << '\n';
-                const T &item = this->get(middleIndex);
+            // Till the element is found or vector cannot
+            // be divided into more parts
+            while (low <= high) {
 
-                std::cout << "x: " << x << '\n';
-                std::cout << "item: " << item << '\n';
-                std::cout << "lowerIndex: " << lowerIndex << '\n';
-                std::cout << "middleIndex: " << middleIndex << '\n';
-                std::cout << "upperIndex: " << upperIndex << '\n';
+                // Finding mid point
+                int mid = ((high - low) / 2) + low;
 
-                if (x > item) {
-                    std::cout << "adding one to lowerIndex" << '\n';
-                    lowerIndex = middleIndex + 1;
-                } else {
-                    std::cout << "adding one to upperIndex" << '\n';
-                    upperIndex = middleIndex + 1;
-                }
-
-                if (item == x) {
+                // If the middle element is equal to target
+                if (this->get(mid) == x) {
+                    // std::cout << "contains x:" << x << '\n';
                     return true;
                 }
+
+                // If the middle element is greater than
+                // target, search in the left half
+                if (this->get(mid) > x)
+                    high = mid - 1;
+
+                // If the middle element is smaller than
+                // target, search the right half
+                else
+                    low = mid + 1;
             }
+
+            // If we don't find the target
+            // std::cout << "does not contain: " << x << '\n';
             return false;
         }
 
@@ -173,25 +179,23 @@ template <typename T> class array_list {
                                const array_list<T> &right) {
         array_list<T> uniques;
 
-        for (size_t i = 0; i < left.count(); i += 1) {
-            const T &leftItem = left.get(i);
-            if (!uniques.contains(leftItem, SortedType::SORTED)) {
-                uniques.push_back(leftItem);
-            }
+        array_list<T> sorted = left;
+        for (auto item : right) {
+            sorted.push_back(item);
         }
 
-        // same thing as left list but with right instead
-        // compare against the somewhat-filled "unique" list instead of an empty
-        // list though
-        for (size_t i = 0; i < right.count(); i += 1) {
-            const T &rightItem = right.get(i);
-            if (!uniques.contains(rightItem, SortedType::SORTED)) {
-                uniques.push_back(rightItem);
+        std::sort(sorted.begin(), sorted.end());
+
+        for (size_t i = 0; i < sorted.count(); i += 1) {
+            const T &item = sorted.get(i);
+            if (!uniques.contains(item, SortedType::SORTED)) {
+                std::cout << "adding to list: " << item << '\n';
+                uniques.push_back(item);
+            } else {
+                std::cout << "NOT ADDING TO LIST: " << item << '\n';
             }
         }
-
         return uniques;
-        return left;
     }
 
     friend std::ostream &operator<<(std::ostream &out,
