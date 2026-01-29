@@ -61,6 +61,29 @@ template <typename T> class array_list {
     T *begin() const { return &this->m_items[0]; }
     T *end() const { return &this->m_items[this->m_count]; }
 
+    bool contains(const T &x, const array_list::SortedType &type) const {
+        if (type == SortedType::SORTED) {
+            std::cout << "sorted" << '\n';
+            return false;
+        }
+
+        // unsorted
+        bool duplicateFound = false;
+        for (size_t j = 0; j < this->count(); j += 1) {
+            const T &newItem = this->get(j);
+            if (x == newItem) {
+                duplicateFound = true;
+                break;
+            }
+        }
+
+        if (duplicateFound) {
+            return true;
+        }
+
+        return false;
+    }
+
     array_list<T> intersection_unsorted(const array_list<T> &left,
                                         const array_list<T> &right) {
         // usedItems tracks right sided compares
@@ -104,23 +127,31 @@ template <typename T> class array_list {
 
         for (size_t i = 0; i < left.count(); i += 1) {
             const T &leftItem = left.get(i);
-            bool duplicateFound = false;
+            // bool duplicateFound = false;
 
             // if left item is not in the uniques list, add it
             // must use duplicateFound outside of for loop because
             // list starts off with 0 items, and it is false by default
-            for (size_t j = 0; j < uniques.count(); j += 1) {
-                const T &newItem = uniques.get(j);
-                if (leftItem == newItem) {
-                    duplicateFound = true;
-                    break;
-                }
-            }
-
-            // finally add
-            if (!duplicateFound) {
+            //
+            // if(!uniques.contains(leftItem)){
+            //	 	uniques.push_back(leftItem);
+            // }
+            //
+            if (!uniques.contains(leftItem, SortedType::UNSORTED)) {
                 uniques.push_back(leftItem);
             }
+            // for (size_t j = 0; j < uniques.count(); j += 1) {
+            //     const T &newItem = uniques.get(j);
+            //     if (leftItem == newItem) {
+            //         duplicateFound = true;
+            //         break;
+            //     }
+            // }
+            //
+            // // finally add
+            // if (!duplicateFound) {
+            //     uniques.push_back(leftItem);
+            // }
         }
 
         // same thing as left list but with right instead
