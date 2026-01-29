@@ -95,7 +95,6 @@ template <typename T> class array_list {
         // finally construct a new array_list object and return
 
         // max size is if all items in both lists are unique, so sizes combined
-        const size_t maxSize = (left.size() + right.size());
         array_list<T> uniques;
 
         for (size_t i = 0; i < left.count(); i += 1) {
