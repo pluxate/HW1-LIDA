@@ -113,7 +113,7 @@ template <typename T> class array_list {
             // must use duplicateFound outside of for loop because
             // list starts off with 0 items, and it is false by default
             for (size_t j = 0; j < uniques.count(); j += 1) {
-                const T &newItem = uniques[j];
+                const T &newItem = uniques.get(j);
                 if (leftItem == newItem) {
                     duplicateFound = true;
                     break;
@@ -134,7 +134,7 @@ template <typename T> class array_list {
             bool duplicateFound = false;
 
             for (size_t j = 0; j < uniques.count(); j += 1) {
-                const T &newItem = uniques[j];
+                const T &newItem = uniques.get(j);
                 if (rightItem != newItem) {
                     continue;
                 }
