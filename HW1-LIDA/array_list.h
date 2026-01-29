@@ -137,19 +137,7 @@ template <typename T> class array_list {
         // list though
         for (size_t i = 0; i < right.count(); i += 1) {
             const T &rightItem = right.get(i);
-            bool duplicateFound = false;
-
-            for (size_t j = 0; j < uniques.count(); j += 1) {
-                const T &newItem = uniques.get(j);
-                if (rightItem != newItem) {
-                    continue;
-                }
-
-                duplicateFound = true;
-                break;
-            }
-
-            if (!duplicateFound) {
+            if (!uniques.contains(rightItem, SortedType::UNSORTED)) {
                 uniques.push_back(rightItem);
             }
         }
