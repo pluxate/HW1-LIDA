@@ -63,24 +63,47 @@ template <typename T> class array_list {
         //   If usedItems[j] == false
         //     Then add the match to the new array and set the value as being unusable
 
-        array_list<T> newList;
+        array_list<T> inter;
         bool *usedItems = new bool[right.m_size]{false};
         for (size_t i = 0; i < left.m_size; i += 1) {
             for (size_t j = 0; j < right.m_size; j += 1) {
                 if (left.m_items[i] == right.m_items[j] && !usedItems[j]) {
                     usedItems[j] = true;
-                    newList.push_back(left.m_items[i]);
+                    inter.push_back(left.m_items[i]);
                     break;
                 }
             }
         }
-        return newList;
+        return inter;
     }
 
     array_list<T> intersection_sorted(const array_list<T> &left,
                                       const array_list<T> &right) {
         //
-        return left;
+        array_list<T> inter;
+        size_t tracker = 0;
+        size_t tracker2 = 0;
+        // tracker +=1 means to add to list pmuch
+        for (size_t i = 0; i < left.m_size; i += 1) {
+            if (left.m_items[i] == left.m_items[i - 1] && i > 0) {
+                tracker += 1;
+                tracker2 = tracker;
+            } else {
+                tracker = 0;
+                tracker2 = tracker;
+            }
+            for (size_t j = 0;
+                 j < right.m_size && left.m_items[i] >= right.m_items[j];
+                 j += 1) {
+                if (left.m_items[i] == right.m_items[j] && tracker2 == 0) {
+                    inter.push_back(left.m_items[i]);
+                    break;
+                } else if (left.m_items[i] == right.m_items[j] && tracker2 > 0) {
+                    tracker2 -= 1;
+                }
+            }
+        }
+        return inter;
     }
 
     array_list<T> union_unsorted(const array_list<T> &left,
