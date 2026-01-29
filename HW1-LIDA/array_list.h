@@ -64,23 +64,16 @@ template <typename T> class array_list {
         //     Then add the match to the new array and set the value as being
         //     unusable
 
-        T *newItems = new T[left.m_size + right.m_size];
+        array_list<T> newList;
         bool *usedItems = new bool[right.m_size]{false};
-        size_t newItemsCount = 0;
         for (size_t i = 0; i < left.m_size; i += 1) {
             for (size_t j = 0; j < right.m_size; j += 1) {
                 if (left.m_items[i] == right.m_items[j] && !usedItems[j]) {
                     usedItems[j] = true;
-                    newItems[newItemsCount] = left.m_items[i];
-                    newItemsCount += 1;
+                    newList.push_back(left.m_items[i]);
                     break;
                 }
             }
-        }
-        array_list<T> newList;
-        for (size_t i = 0; i < newItemsCount; i += 1) {
-            auto item = newItems[i];
-            newList.push_back(item);
         }
         return newList;
     }
