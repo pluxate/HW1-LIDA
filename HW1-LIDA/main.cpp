@@ -58,6 +58,10 @@ int main() {
     std::cout << right << '\n';
     //
     // // intersection sorted list:
+    // std::cout << "Intersection of sorted list: " << '\n';
+    // std::cout << left.intersection_sorted(left, right) << '\n';
+    std::cout << "Union of sorted list: " << '\n';
+    std::cout << left.union_sorted(left, right) << '\n';
     std::cout << "Intersection of sorted list: " << '\n';
     std::cout << left.intersection_sorted(left, right) << '\n';
     // std::cout << "Union of sorted list: " << '\n';

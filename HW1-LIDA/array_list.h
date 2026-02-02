@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <iostream>
 
@@ -11,6 +12,11 @@ template <typename T> class array_list {
   public:
     array_list() { this->m_items = nullptr; }
     ~array_list() {}
+
+    enum SortedType {
+        UNSORTED = 0,
+        SORTED = 1,
+    };
 
     size_t size() const { return this->m_size; }
     size_t count() const { return this->m_count; }
@@ -55,6 +61,43 @@ template <typename T> class array_list {
 
     T *begin() const { return &this->m_items[0]; }
     T *end() const { return &this->m_items[this->m_count]; }
+
+    bool contains(const T &x, const array_list::SortedType &type) const {
+        if (type == SortedType::SORTED) {
+            int low = 0, high = this->count() - 1;
+
+            while (low <= high) {
+                int mid = ((high - low) / 2) + low;
+
+                if (this->get(mid) == x) {
+                    return true;
+                }
+
+                if (this->get(mid) > x) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            return false;
+        }
+
+        // unsorted
+        bool duplicateFound = false;
+        for (size_t j = 0; j < this->count(); j += 1) {
+            const T &newItem = this->get(j);
+            if (x == newItem) {
+                duplicateFound = true;
+                break;
+            }
+        }
+
+        if (duplicateFound) {
+            return true;
+        }
+
+        return false;
+    }
 
     array_list<T> intersection_unsorted(const array_list<T> &left,
                                         const array_list<T> &right) {
@@ -122,21 +165,7 @@ template <typename T> class array_list {
 
         for (size_t i = 0; i < left.count(); i += 1) {
             const T &leftItem = left.get(i);
-            bool duplicateFound = false;
-
-            // if left item is not in the uniques list, add it
-            // must use duplicateFound outside of for loop because
-            // list starts off with 0 items, and it is false by default
-            for (size_t j = 0; j < uniques.count(); j += 1) {
-                const T &newItem = uniques.get(j);
-                if (leftItem == newItem) {
-                    duplicateFound = true;
-                    break;
-                }
-            }
-
-            // finally add
-            if (!duplicateFound) {
+            if (!uniques.contains(leftItem, SortedType::UNSORTED)) {
                 uniques.push_back(leftItem);
             }
         }
@@ -146,19 +175,7 @@ template <typename T> class array_list {
         // list though
         for (size_t i = 0; i < right.count(); i += 1) {
             const T &rightItem = right.get(i);
-            bool duplicateFound = false;
-
-            for (size_t j = 0; j < uniques.count(); j += 1) {
-                const T &newItem = uniques.get(j);
-                if (rightItem != newItem) {
-                    continue;
-                }
-
-                duplicateFound = true;
-                break;
-            }
-
-            if (!duplicateFound) {
+            if (!uniques.contains(rightItem, SortedType::UNSORTED)) {
                 uniques.push_back(rightItem);
             }
         }
@@ -168,8 +185,23 @@ template <typename T> class array_list {
 
     array_list<T> union_sorted(const array_list<T> &left,
                                const array_list<T> &right) {
-        //
-        return left;
+        array_list<T> uniques;
+
+        array_list<T> sorted = left;
+        for (auto item : right) {
+            sorted.push_back(item);
+        }
+
+        std::sort(sorted.begin(), sorted.end());
+
+        for (size_t i = 0; i < sorted.count(); i += 1) {
+            const T &item = sorted.get(i);
+            if (!uniques.contains(item, SortedType::SORTED)) {
+                uniques.push_back(item);
+            }
+        }
+
+        return uniques;
     }
 
     friend std::ostream &operator<<(std::ostream &out,
