@@ -186,6 +186,15 @@ template <typename T> class array_list {
 
     array_list<T> union_sorted(const array_list<T> &left,
                                const array_list<T> &right) {
+
+        // i dont know of a better way to keep the sortedness of the two lists
+        // other than combining the two and then sorting them
+        // sorted follows the same logic on the unsorted, except
+        // it uses binary search instead of linear, within the
+        // `uniques.contains()` function
+        // it only has to iterate over `sorted` once because sorted is the two
+        // lists combined
+
         array_list<T> uniques;
 
         array_list<T> sorted = left;
