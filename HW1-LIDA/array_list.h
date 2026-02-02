@@ -63,6 +63,7 @@ template <typename T> class array_list {
     T *end() const { return &this->m_items[this->count()]; }
 
     bool contains(const T &x, const array_list::SortedType &type) const {
+        // sorted, use binary search
         if (type == SortedType::SORTED) {
             int low = 0, high = this->count() - 1;
 
@@ -82,18 +83,12 @@ template <typename T> class array_list {
             return false;
         }
 
-        // unsorted
-        bool duplicateFound = false;
+        // unsorted, search linearlly
         for (size_t j = 0; j < this->count(); j += 1) {
             const T &newItem = this->get(j);
             if (x == newItem) {
-                duplicateFound = true;
-                break;
+                return true;
             }
-        }
-
-        if (duplicateFound) {
-            return true;
         }
 
         return false;
