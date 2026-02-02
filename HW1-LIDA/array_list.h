@@ -108,9 +108,9 @@ template <typename T> class array_list {
         //     unusable
 
         array_list<T> inter;
-        bool *usedItems = new bool[right.m_size]{false};
-        for (size_t i = 0; i < left.m_size; i += 1) {
-            for (size_t j = 0; j < right.m_size; j += 1) {
+        bool *usedItems = new bool[right.count()]{false};
+        for (size_t i = 0; i < left.count(); i += 1) {
+            for (size_t j = 0; j < right.count(); j += 1) {
                 if (left.m_items[i] == right.m_items[j] && !usedItems[j]) {
                     usedItems[j] = true;
                     inter.push_back(left.m_items[i]);
