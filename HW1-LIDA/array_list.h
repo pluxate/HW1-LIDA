@@ -118,30 +118,58 @@ template <typename T> class array_list {
 
     array_list<T> intersection_sorted(const array_list<T> &left,
                                       const array_list<T> &right) {
-        // future documentation here
-        array_list<T> inter;
-        size_t tracker = 0;
-        size_t tracker2 = 0;
+        // for each item in left
+        //   if left.item == left.previousitem
+        //     increase duplicateTracker & 2 by 1
+        //   else
+        //     reset duplicateTracker
+        //   for each item in right until right.item > left.item (isn't
+        //   necessary to search past this point)
+        //     if left.item == right.item and tracker2 is 0
+        //       push_back left
+        //     else if tempTracker != 0 and left.item == right.item
+        //       reduce tempTracker by 1
+
+        // duplicateTracker is the persistent counter between left items
+        // tempTracker is the temporary counter between right items
+
+        array_list<T> intersected;
+        size_t duplicateTracker = 0;
+        size_t tempTracker = 0;
+
         // tracker +=1 means to add to list pmuch
         for (size_t i = 0; i < left.count(); i += 1) {
-            if (left.get(i) == left.get(i - 1) && i > 0) {
-                tracker += 1;
-                tracker2 = tracker;
+            const T leftItem = left.get(i);
+
+            // tracker is the number of duplicates, so if prev != new, then
+            // reset, otherwise add to new tracker
+            if (leftItem == left.get(i - 1) && i > 0) {
+                duplicateTracker += 1;
+                tempTracker = duplicateTracker;
             } else {
-                tracker = 0;
-                tracker2 = tracker;
+                duplicateTracker = 0;
+                tempTracker = duplicateTracker;
             }
-            for (size_t j = 0; j < right.count() && left.get(i) >= right.get(j);
+
+            for (size_t j = 0; j < right.count() && leftItem >= right.get(j);
                  j += 1) {
-                if (left.get(i) == right.get(j) && tracker2 == 0) {
-                    inter.push_back(left.get(i));
+                const T rightItem = right.get(j);
+
+                // match found with no duplicates to worry about
+                const bool matchFound =
+                    leftItem == rightItem && tempTracker == 0;
+                if (matchFound) {
+                    intersected.push_back(leftItem);
                     break;
-                } else if (left.get(i) == right.get(j) && tracker2 > 0) {
-                    tracker2 -= 1;
+                }
+
+                // duplipcate found -- ignoring
+                if (leftItem == rightItem && tempTracker > 0) {
+                    tempTracker -= 1;
                 }
             }
         }
-        return inter;
+        return intersected;
     }
 
     array_list<T> union_unsorted(const array_list<T> &left,
