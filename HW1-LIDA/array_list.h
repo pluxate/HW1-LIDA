@@ -37,7 +37,7 @@ template <typename T> class array_list {
 
         // expand
         if (this->count() >= this->size()) {
-            const size_t newSize = this->size() *= 2;
+            const size_t newSize = this->size() * 2;
             T *newItems = new T[newSize];
             for (size_t i = 0; i < this->size(); i += 1) {
                 newItems[i] = this->get(i);
