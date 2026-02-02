@@ -188,14 +188,11 @@ template <typename T> class array_list {
 
         for (size_t i = 0; i < sorted.count(); i += 1) {
             const T &item = sorted.get(i);
-            std::cout << uniques;
             if (!uniques.contains(item, SortedType::SORTED)) {
-                std::cout << "adding to list: " << item << '\n';
                 uniques.push_back(item);
-            } else {
-                std::cout << "NOT ADDING TO LIST: " << item << '\n';
             }
         }
+
         return uniques;
     }
 
