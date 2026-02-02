@@ -36,11 +36,11 @@ template <typename T> class array_list {
         }
 
         // expand
-        if (this->m_count >= this->m_size) {
-            const size_t newSize = this->m_size *= 2;
+        if (this->count() >= this->size()) {
+            const size_t newSize = this->size() *= 2;
             T *newItems = new T[newSize];
-            for (size_t i = 0; i < this->m_size; i += 1) {
-                newItems[i] = this->m_items[i];
+            for (size_t i = 0; i < this->size(); i += 1) {
+                newItems[i] = this->get(i);
             }
 
             delete[] this->m_items;
@@ -48,19 +48,19 @@ template <typename T> class array_list {
 
             this->m_size = newSize;
 
-            this->m_items[this->m_count] = x;
+            this->m_items[this->count()] = x;
             this->m_count += 1;
             return x;
         }
 
         // just input
-        this->m_items[this->m_count] = x;
+        this->m_items[this->count()] = x;
         this->m_count += 1;
         return x;
     }
 
     T *begin() const { return &this->m_items[0]; }
-    T *end() const { return &this->m_items[this->m_count]; }
+    T *end() const { return &this->m_items[this->count()]; }
 
     bool contains(const T &x, const array_list::SortedType &type) const {
         if (type == SortedType::SORTED) {
@@ -111,9 +111,9 @@ template <typename T> class array_list {
         bool *usedItems = new bool[right.count()]{false};
         for (size_t i = 0; i < left.count(); i += 1) {
             for (size_t j = 0; j < right.count(); j += 1) {
-                if (left.m_items[i] == right.m_items[j] && !usedItems[j]) {
+                if (left.get(i) == right.get(j) && !usedItems[j]) {
                     usedItems[j] = true;
-                    inter.push_back(left.m_items[i]);
+                    inter.push_back(left.get(i));
                     break;
                 }
             }
@@ -128,22 +128,20 @@ template <typename T> class array_list {
         size_t tracker = 0;
         size_t tracker2 = 0;
         // tracker +=1 means to add to list pmuch
-        for (size_t i = 0; i < left.m_size; i += 1) {
-            if (left.m_items[i] == left.m_items[i - 1] && i > 0) {
+        for (size_t i = 0; i < left.count(); i += 1) {
+            if (left.get(i) == left.get(i - 1) && i > 0) {
                 tracker += 1;
                 tracker2 = tracker;
             } else {
                 tracker = 0;
                 tracker2 = tracker;
             }
-            for (size_t j = 0;
-                 j < right.m_size && left.m_items[i] >= right.m_items[j];
+            for (size_t j = 0; j < right.count() && left.get(i) >= right.get(j);
                  j += 1) {
-                if (left.m_items[i] == right.m_items[j] && tracker2 == 0) {
-                    inter.push_back(left.m_items[i]);
+                if (left.get(i) == right.get(j) && tracker2 == 0) {
+                    inter.push_back(left.get(i));
                     break;
-                } else if (left.m_items[i] == right.m_items[j] &&
-                           tracker2 > 0) {
+                } else if (left.get(i) == right.get(j) && tracker2 > 0) {
                     tracker2 -= 1;
                 }
             }
