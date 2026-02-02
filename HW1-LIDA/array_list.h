@@ -64,36 +64,21 @@ template <typename T> class array_list {
 
     bool contains(const T &x, const array_list::SortedType &type) const {
         if (type == SortedType::SORTED) {
-            // Defining the part of the vector to be
-            // searched
-            int low = 0, high = this->count() - 1; 
+            int low = 0, high = this->count() - 1;
 
-            // Till the element is found or vector cannot
-            // be divided into more parts
             while (low <= high) {
-
-                // Finding mid point
                 int mid = ((high - low) / 2) + low;
 
-                // If the middle element is equal to target
                 if (this->get(mid) == x) {
-                    // std::cout << "contains x:" << x << '\n';
                     return true;
                 }
 
-                // If the middle element is greater than
-                // target, search in the left half
-                if (this->get(mid) > x)
+                if (this->get(mid) > x) {
                     high = mid - 1;
-
-                // If the middle element is smaller than
-                // target, search the right half
-                else
+                } else {
                     low = mid + 1;
+                }
             }
-
-            // If we don't find the target
-            // std::cout << "does not contain: " << x << '\n';
             return false;
         }
 
