@@ -66,7 +66,7 @@ template <typename T> class array_list {
         if (type == SortedType::SORTED) {
             // Defining the part of the vector to be
             // searched
-            int low = 0, high = this->size() - 1;
+            int low = 0, high = this->count() - 1; 
 
             // Till the element is found or vector cannot
             // be divided into more parts
@@ -188,6 +188,7 @@ template <typename T> class array_list {
 
         for (size_t i = 0; i < sorted.count(); i += 1) {
             const T &item = sorted.get(i);
+            std::cout << uniques;
             if (!uniques.contains(item, SortedType::SORTED)) {
                 std::cout << "adding to list: " << item << '\n';
                 uniques.push_back(item);
