@@ -178,23 +178,26 @@ template <typename T> class array_list {
     array_list<T> union_sorted(const array_list<T> &left,
                                const array_list<T> &right) {
         array_list<T> uniques;
-
-        array_list<T> sorted = left;
-        for (auto item : right) {
-            sorted.push_back(item);
-        }
-
-        std::sort(sorted.begin(), sorted.end());
-
-        for (size_t i = 0; i < sorted.count(); i += 1) {
-            const T &item = sorted.get(i);
+        for (size_t i = 0; i < left.count(); i += 1) {
+            const T &item = left.get(i);
             if (!uniques.contains(item, SortedType::SORTED)) {
-                std::cout << "adding to list: " << item << '\n';
+                std::cout << "pushing back item: " << item << '\n';
                 uniques.push_back(item);
             } else {
-                std::cout << "NOT ADDING TO LIST: " << item << '\n';
+                std::cout << "NOT ADDING BACK ITEM: " << item << '\n';
             }
         }
+
+        for (size_t i = 0; i < right.count(); i += 1) {
+            const T &item = right.get(i);
+            if (!uniques.contains(item, SortedType::SORTED)) {
+                std::cout << "pushing back item: " << item << '\n';
+                uniques.push_back(item);
+            } else {
+                std::cout << "NOT ADDING BACK ITEM: " << item << '\n';
+            }
+        }
+
         return uniques;
     }
 
