@@ -123,7 +123,7 @@ template <typename T> class array_list {
 
     array_list<T> intersection_sorted(const array_list<T> &left,
                                       const array_list<T> &right) {
-        //
+        // future documentation here
         array_list<T> inter;
         size_t tracker = 0;
         size_t tracker2 = 0;
@@ -142,7 +142,8 @@ template <typename T> class array_list {
                 if (left.m_items[i] == right.m_items[j] && tracker2 == 0) {
                     inter.push_back(left.m_items[i]);
                     break;
-                } else if (left.m_items[i] == right.m_items[j] && tracker2 > 0) {
+                } else if (left.m_items[i] == right.m_items[j] &&
+                           tracker2 > 0) {
                     tracker2 -= 1;
                 }
             }
