@@ -169,18 +169,17 @@ template <typename T> class array_list {
                 const T &rightItem = right.get(j);
 
                 const bool matchFound = (leftItem == rightItem);
-                const bool duplicateFound = (tempTracker > 0);
-
                 if (!matchFound) {
                     continue;
                 }
 
-                // match found with no duplicates to worry about
+                const bool duplicateFound = (tempTracker > 0);
                 if (!duplicateFound) {
+                    // no duplicates to worry about
                     intersected.push_back(leftItem);
                     break;
                 } else {
-                    // duplipcate found -- ignoring
+                    // ignore the duplicate item, fix the tracker
                     tempTracker -= 1;
                 }
             }
