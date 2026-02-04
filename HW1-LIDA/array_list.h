@@ -98,22 +98,35 @@ template <typename T> class array_list {
                                         const array_list<T> &right) {
         // usedItems tracks right sided compares
         // Find a match between left and right
-        //   If usedItems[j] == false
-        //     Then add the match to the new array and set the value as being
-        //     unusable
+        // if itemAlreadyUsed == false:
+        //	add to intersection list
+        //	mark value as unusable / already used `itemAlreadyUsed = true`
 
-        array_list<T> inter;
-        bool *usedItems = new bool[right.count()]{false};
+        array_list<T> intersection;
+
+        const size_t itemCount = right.count();
+        bool *usedItems = new bool[itemCount]{false};
+
         for (size_t i = 0; i < left.count(); i += 1) {
+            const T &leftItem = left.get(i);
+
             for (size_t j = 0; j < right.count(); j += 1) {
-                if (left.get(i) == right.get(j) && !usedItems[j]) {
-                    usedItems[j] = true;
-                    inter.push_back(left.get(i));
-                    break;
+                const T &rightItem = right.get(j);
+                bool &itemAlreadyUsed = usedItems[j];
+
+                if (leftItem != rightItem || itemAlreadyUsed) {
+                    continue;
                 }
+
+                // mark item as used, and append to the intersection list
+                itemAlreadyUsed = true;
+                intersection.push_back(leftItem);
+
+                // break for efficiency because we don't need to check anymore
+                break;
             }
         }
-        return inter;
+        return intersection;
     }
 
     array_list<T> intersection_sorted(const array_list<T> &left,
