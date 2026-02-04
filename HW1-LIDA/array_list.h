@@ -152,32 +152,33 @@ template <typename T> class array_list {
 
         // tracker +=1 means to add to list pmuch
         for (size_t i = 0; i < left.count(); i += 1) {
-            const T leftItem = left.get(i);
+            const T &leftItem = left.get(i);
 
             // tracker is the number of duplicates, so if prev != new, then
             // reset, otherwise add to new tracker
             if (leftItem == left.get(i - 1) && i > 0) {
                 duplicateTracker += 1;
-                tempTracker = duplicateTracker;
             } else {
                 duplicateTracker = 0;
-                tempTracker = duplicateTracker;
             }
+
+            tempTracker = duplicateTracker;
 
             for (size_t j = 0; j < right.count() && leftItem >= right.get(j);
                  j += 1) {
-                const T rightItem = right.get(j);
+                const T &rightItem = right.get(j);
+
+                const bool matchFound = (leftItem == rightItem);
+                const bool duplicateFound = (tempTracker > 0);
 
                 // match found with no duplicates to worry about
-                const bool matchFound =
-                    leftItem == rightItem && tempTracker == 0;
-                if (matchFound) {
+                if (matchFound && !duplicateFound) {
                     intersected.push_back(leftItem);
                     break;
                 }
 
                 // duplipcate found -- ignoring
-                if (leftItem == rightItem && tempTracker > 0) {
+                if (matchFound && duplicateFound) {
                     tempTracker -= 1;
                 }
             }
