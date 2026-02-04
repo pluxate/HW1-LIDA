@@ -200,22 +200,17 @@ template <typename T> class array_list {
 
         array_list<T> uniques;
 
-        for (size_t i = 0; i < left.count(); i += 1) {
-            const T &leftItem = left.get(i);
-            if (!uniques.contains(leftItem, SortedType::UNSORTED)) {
-                uniques.push_back(leftItem);
+        auto calcUniques = [&](const array_list list) -> void {
+            for (size_t i = 0; i < list.count(); i += 1) {
+                const T &item = list.get(i);
+                if (!uniques.contains(item, SortedType::UNSORTED)) {
+                    uniques.push_back(item);
+                }
             }
-        }
+        };
 
-        // same thing as left list but with right instead
-        // compare against the somewhat-filled "unique" list instead of an empty
-        // list though
-        for (size_t i = 0; i < right.count(); i += 1) {
-            const T &rightItem = right.get(i);
-            if (!uniques.contains(rightItem, SortedType::UNSORTED)) {
-                uniques.push_back(rightItem);
-            }
-        }
+        calcUniques(left);
+        calcUniques(right);
 
         return uniques;
     }
