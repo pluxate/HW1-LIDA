@@ -174,15 +174,15 @@ template <typename T> class array_list {
 
     array_list<T> union_unsorted(const array_list<T> &left,
                                  const array_list<T> &right) {
+        // "uniques" list is another `array_list` object, and we use its
+        // built-in array as the uniques list.
         // get all uniques by:
         // for item in left.items:
-        // 	if item not in "uniques" list:
+        //	if item not in "uniques" list:
         //		uniques.append(item)
         //
         // then do the same thing with right.items, using same "uniques" list
-        // finally construct a new array_list object and return
 
-        // max size is if all items in both lists are unique, so sizes combined
         array_list<T> uniques;
 
         for (size_t i = 0; i < left.count(); i += 1) {
