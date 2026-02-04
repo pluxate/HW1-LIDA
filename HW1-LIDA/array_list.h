@@ -171,14 +171,16 @@ template <typename T> class array_list {
                 const bool matchFound = (leftItem == rightItem);
                 const bool duplicateFound = (tempTracker > 0);
 
-                // match found with no duplicates to worry about
-                if (matchFound && !duplicateFound) {
-                    intersected.push_back(leftItem);
-                    break;
+                if (!matchFound) {
+                    continue;
                 }
 
-                // duplipcate found -- ignoring
-                if (matchFound && duplicateFound) {
+                // match found with no duplicates to worry about
+                if (!duplicateFound) {
+                    intersected.push_back(leftItem);
+                    break;
+                } else {
+                    // duplipcate found -- ignoring
                     tempTracker -= 1;
                 }
             }
